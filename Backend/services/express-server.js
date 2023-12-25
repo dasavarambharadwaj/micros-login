@@ -25,10 +25,10 @@ function server(port, originAddress) {
     if (process.env.SERVER === "prod") {
       var options = {
         key: fs.readFileSync(
-          "/etc/letsencrypt/live/simplyonline.tech/privkey.pem"
+          `/etc/letsencrypt/live/${process.env.DOMAIN_NAME}/privkey.pem`
         ),
         cert: fs.readFileSync(
-          "/etc/letsencrypt/live/simplyonline.tech/fullchain.pem"
+          `/etc/letsencrypt/live/${process.env.DOMAIN_NAME}/fullchain.pem`
         ),
       };
       https.createServer(options, APP).listen(port, () => {
