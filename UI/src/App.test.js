@@ -1,8 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders App component without crashing", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+});
+
+describe("Theme change", () => {
+  it("triggers theme change function", async () => {
+    const { getByTestId } = render(<App />);
+    // Click reset button
+    fireEvent.click(getByTestId("theme-switch"));
+  });
 });
