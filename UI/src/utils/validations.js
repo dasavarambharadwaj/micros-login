@@ -9,6 +9,7 @@ import {
   usernameMinCharacters,
   usernameRequired,
 } from "./constants";
+
 export const email = Yup.string().email(invalidEmail).required(emailRequired);
 export const username = Yup.string()
   .min(3, usernameMinCharacters)
