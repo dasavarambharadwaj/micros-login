@@ -1,13 +1,21 @@
 import * as Yup from "yup";
-export const email = Yup.string()
-  .email("Invalid Email")
-  .required("Email is required");
+import {
+  confirmPasswordRequired,
+  emailRequired,
+  invalidEmail,
+  passwordMinCharacters,
+  passwordRequired,
+  passwordsMatch,
+  usernameMinCharacters,
+  usernameRequired,
+} from "./constants";
+export const email = Yup.string().email(invalidEmail).required(emailRequired);
 export const username = Yup.string()
-  .min(3, "Username must be at least 3 characters")
-  .required("Username is required");
+  .min(3, usernameMinCharacters)
+  .required(usernameRequired);
 export const password = Yup.string()
-  .min(8, "Password must be at least 8 characters")
-  .required("Password is required");
+  .min(8, passwordMinCharacters)
+  .required(passwordRequired);
 export const confirmPassword = Yup.string()
-  .oneOf([Yup.ref("password"), null], "Passwords must match")
-  .required("Confirm Password is required");
+  .oneOf([Yup.ref("password"), null], passwordsMatch)
+  .required(confirmPasswordRequired);
