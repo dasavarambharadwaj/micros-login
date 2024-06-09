@@ -5,10 +5,8 @@ import compress from "compression";
 import methodOverride from "method-override";
 import cors from "cors";
 import helmet from "helmet";
-import passport from "passport";
 import routes from "../api/routes/v1/index.js";
 import { logs } from "./vars.js";
-import * as strategies from "./passport.js";
 import { converter, handler, notFound } from "../api/middlewares/error.js";
 
 /**
@@ -36,10 +34,6 @@ app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
-
-// enable authentication
-app.use(passport.initialize());
-passport.use("jwt", strategies.jwt);
 
 // mount api v1 routes
 app.use("/v1", routes);

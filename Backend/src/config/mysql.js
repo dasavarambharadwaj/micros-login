@@ -1,4 +1,4 @@
-import * as mysql from "mysql2";
+import mysql from "mysql2/promise";
 import {
   mysqlDB,
   mysqlHost,
@@ -7,10 +7,19 @@ import {
   mysqlUser,
 } from "./vars.js";
 
-export default mysql.createPool({
+const connection = await mysql.createPool({
   host: mysqlHost,
   port: parseInt(mysqlPort),
   user: mysqlUser,
   password: mysqlPassword,
   database: mysqlDB,
 });
+
+export const runQuery = async function (query, payload) {
+  try {
+    return await connection.query(query, payload);
+  } catch (e) {
+    throw e;
+  }
+};
+export default connection;
