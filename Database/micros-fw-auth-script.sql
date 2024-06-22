@@ -33,15 +33,6 @@ CREATE TABLE `passwords` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `passwords`
---
-
-LOCK TABLES `passwords` WRITE;
-/*!40000 ALTER TABLE `passwords` DISABLE KEYS */;
-/*!40000 ALTER TABLE `passwords` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `salts`
 --
 
@@ -55,15 +46,6 @@ CREATE TABLE `salts` (
   CONSTRAINT `salts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `salts`
---
-
-LOCK TABLES `salts` WRITE;
-/*!40000 ALTER TABLE `salts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `salts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -82,15 +64,6 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping events for database 'microfwlogin'
@@ -184,7 +157,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserDetailsByEmailAndPassword`(
 )
 BEGIN
     DECLARE user_id_val INT;
-    DECLARE password_hash VARCHAR(255);
+    DECLARE password_hash_val VARCHAR(255);
     
     -- Get the user_id associated with the given email
     SELECT user_id INTO user_id_val FROM Users WHERE email = p_email AND isActive = TRUE;
@@ -195,10 +168,10 @@ BEGIN
         SET MESSAGE_TEXT = 'Invalid username or password';
     ELSE
         -- Get the password hash associated with the user
-        SELECT password_hash INTO password_hash FROM Passwords WHERE user_id = user_id_val;
+        SELECT password_hash INTO password_hash_val FROM Passwords WHERE user_id = user_id_val;
         
         -- Check if the provided password matches the stored password hash
-        IF SHA2(CONCAT(p_password, (SELECT salt FROM Salts WHERE user_id = user_id_val)), 256) != password_hash THEN
+        IF SHA2(CONCAT(p_password, (SELECT salt FROM Salts WHERE user_id = user_id_val)), 256) != password_hash_val THEN
             SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Invalid username or password';
         ELSE
@@ -222,4 +195,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-12  7:57:42
+-- Dump completed on 2024-06-22  8:34:55
