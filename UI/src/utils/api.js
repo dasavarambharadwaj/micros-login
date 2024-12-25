@@ -22,7 +22,6 @@ const request = async (endpoint, method, body = null, queryParams = {}) => {
 
   try {
     const response = await fetch(url, options);
-    debugger;
     if (!response.ok) {
       const body = await response.json();
       throw new Error(body?.message ?? genericErrorMessage);

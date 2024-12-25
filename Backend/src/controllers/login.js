@@ -28,6 +28,16 @@ export const checkUser = async function (req, res, next) {
   }
 };
 
+export const getAllUsers = async function (req, res, next) {
+  try {
+    const data = await runQuery("CALL GetAllUsers();", []);
+    const parsedData = data?.[0]?.[0] || [];
+    res.send(parsedData);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const addUser = async function (req, res, next) {
   try {
     const data = await runQuery("CALL addUser(?,?,?);", [

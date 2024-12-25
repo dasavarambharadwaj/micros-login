@@ -17,8 +17,12 @@ function Login() {
   async function handleSubmit(values, { setSubmitting, resetForm }) {
     try {
       const response = await api.post(LOGIN, values);
-      localStorage.setItem("token", response.token);
-      window.location.pathname = process.env.REACT_APP_REDIRECT_URL;
+      const params = new URLSearchParams(window.location.search);
+      const callbackUrl = params.get("callbackUrl") || "/";
+      const redirectUrl = params.get("redirectUrl") || "/";
+      window.location.href = `${redirectUrl}/callback?token=${
+        response.token
+      }&callbackUrl=${encodeURIComponent(callbackUrl)}`;
     } catch (e) {
       setErrorMessage(e.message);
       setShowAlert(true);
