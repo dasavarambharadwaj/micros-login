@@ -3,11 +3,7 @@ import path from "path";
 import dotenvSafe from "dotenv-safe";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// import .env variables
-dotenvSafe.config({
-  path: path.join(__dirname, "../../.env"),
-  example: path.join(__dirname, "../../.env.example"),
-});
+
 
 export const env = process.env.NODE_ENV;
 export const port = process.env.PORT;
