@@ -3,6 +3,7 @@ import Login from "../../components/login/Login";
 import Register from "../../components/register/Register";
 import { Button } from "@mui/material";
 import Logo from "../../components/logo/Logo.js";
+import SigninGoogle from "../../components/SigninGoogle/SigninGoogle";
 function LoginWrapper() {
   const [showLogin, setShowLogin] = useState(true);
   function changeView() {
@@ -18,6 +19,7 @@ function LoginWrapper() {
             {showLogin ? "New User?" : "Existing User?"}
           </Button>
         </div>
+        {<SigninGoogle></SigninGoogle>}
       </div>
     </div>
   );
